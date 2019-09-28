@@ -3,7 +3,7 @@ import discord
 # Generates and returns an Embed object from a rant json object
 def generate_embed(rant):
     embed = discord.Embed(
-        description = rant['text'],
+        description = rant['text'] + "\n[Read More](https://devrant.com/rants/" + str(rant['id']) + ")",
         colour = discord.Colour.from_rgb(249, 154, 102)
     )
 
@@ -13,6 +13,8 @@ def generate_embed(rant):
         embed.set_author(name = rant['user_username'])
 
     embed.set_footer(text = str(rant['score']) + '++ | ' + str(rant['num_comments']) + ' Comments')
+
+
 
     if rant['attached_image'] != '':
         embed.set_image(url = rant['attached_image']['url'])
