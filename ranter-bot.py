@@ -3,17 +3,13 @@ from discord.ext import commands
 import requests
 import json
 import datetime
-import configparser
+import os
 
 from helpers import generate_embed
 
-# Open configuration file
-config = configparser.ConfigParser()
-config.read('bot.ini')
-
-# Get data from configuration file
-prefix = config['discord_bot_cfg']['prefix']
-tooken = config['discord_bot_cfg']['tooken']
+# Get tooken and prefix from environment variables 
+prefix = os.getenv('PREFIX', '&')
+tooken = os.getenv('TOOKEN')
 
 # Init bot
 bot = commands.Bot(command_prefix = prefix)
@@ -26,7 +22,7 @@ async def on_ready():
 
     print('Bot ready!')
 
-# &help command displays an help embed with a list of all the commands
+# Help command displays an help embed with a list of all the commands
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -39,7 +35,7 @@ async def help(ctx):
 
     await ctx.send(embed = embed)
 
-# &rant command gets a random rant from devRant API and sends it to server's text channel
+# Rant command gets a random rant from devRant API and sends it to server's text channel
 @bot.command()
 async def rant(ctx):
     response = requests.get('https://devrant.com/api/devrant/rants/surprise?app=3')
