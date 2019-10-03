@@ -9,5 +9,5 @@ Share rants from [devRant](https://devrant.com/) on your discord server with fri
 1. Create a bot on your [Discord Developer Portal](https://discordapp.com/developers/applications/) account
 1. Copy the tooken from the bot you created
 1. Rename `.env.example` to `.env`, edit it and set the `TOOKEN` field to the tooken that you copied previously
-1. Build docker image with `docker build -t ranter-bot .`
-1. Run the container with `docker run -d --env-file .env ranter-bot`
+1. Run the container with `docker-compose up -d`
+1. Invite the bot to your discord server and enjoy 👍
