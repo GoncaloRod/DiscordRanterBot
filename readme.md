@@ -2,7 +2,8 @@
 Share rants from [devRant](https://devrant.com/) on your discord server with friends!
 
 ## Requirements
-- [Docker](https://docs.docker.com/install/) installed on your machine
+- [Docker](https://docs.docker.com/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## How to use
 1. Clone this repository
