@@ -20,3 +20,9 @@ def generate_embed(rant):
         embed.set_image(url = rant['attached_image']['url'])
 
     return embed
+
+def error_embed(error):
+    discord.Embed(
+        title = ':exclamation: ' + error + ' :exclamation:',
+        colour = discord.Color.red()
+    )
