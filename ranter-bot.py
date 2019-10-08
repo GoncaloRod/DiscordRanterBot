@@ -32,14 +32,27 @@ async def help(ctx):
 
     embed.set_author(name = 'Ranter Bot Help')
 
-    embed.add_field(name = prefix + 'top', value = 'Gets the top rant given by devRant algorithm.')
-    embed.add_field(name = prefix + 'surprise', value = 'Gets a random rant from devRant', inline = False)
+    embed.add_field(name = prefix + 'top', value = 'Gets the top rant on devRant.', inline = False)
+    embed.add_field(name = prefix + 'trending', value = 'Gets a rant given by devRant\'s algorithm.', inline = False)
+    embed.add_field(name = prefix + 'recent', value = 'Gets the most recent rant on devRant.', inline = False)
+    embed.add_field(name = prefix + 'surprise', value = 'Gets a random rant from devRant.', inline = False)
 
     await ctx.send(embed = embed)
 
-# Rant command gets a rant using devRant algorithm
 @bot.command()
 async def top(ctx):
+    response = requests.get('https://devrant.com/api/devrant/rants?app=3&sort=top&limit=1')
+
+    if response.json()['success'] != True:
+        await ctx.send(embed = error_embed(response.json()['error']))
+        return
+
+    rant = response.json()['rants'][0]
+    await ctx.send(embed = generate_embed(rant))
+
+
+@bot.command()
+async def trending(ctx):
     response = requests.get('https://devrant.com/api/devrant/rants?app=3&sort=algo&limit=1')
 
     if response.json()['success'] != True:
@@ -49,7 +62,17 @@ async def top(ctx):
     rant = response.json()['rants'][0]
     await ctx.send(embed = generate_embed(rant))
 
-# Surprise command gets a random rant from devRant API and sends it to server's text channel
+@bot.command()
+async def recent(ctx):
+    response = requests.get('https://devrant.com/api/devrant/rants?app=3&sort=recent&limit=1')
+
+    if response.json()['success'] != True:
+        await ctx.send(embed = error_embed(response.json()['error']))
+        return
+
+    rant = response.json()['rants'][0]
+    await ctx.send(embed = generate_embed(rant))
+
 @bot.command()
 async def surprise(ctx):
     response = requests.get('https://devrant.com/api/devrant/rants/surprise?app=3')
