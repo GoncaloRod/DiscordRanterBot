@@ -32,10 +32,10 @@ async def help(ctx):
 
     embed.set_author(name = 'Ranter Bot Help')
 
-    embed.add_field(name = prefix + 'top', value = 'Gets the top rant on devRant.', inline = False)
-    embed.add_field(name = prefix + 'trending', value = 'Gets a rant given by devRant\'s algorithm.', inline = False)
-    embed.add_field(name = prefix + 'recent', value = 'Gets the most recent rant on devRant.', inline = False)
-    embed.add_field(name = prefix + 'surprise', value = 'Gets a random rant from devRant.', inline = False)
+    embed.add_field(name = '```' + prefix + 'top' + '```', value = 'Gets the top rant on devRant.', inline = False)
+    embed.add_field(name = '```' + prefix + 'trending' + '```', value = 'Gets a rant given by devRant\'s algorithm.', inline = False)
+    embed.add_field(name = '```' + prefix + 'recent' + '```', value = 'Gets the most recent rant on devRant.', inline = False)
+    embed.add_field(name = '```' + prefix + 'surprise' + '```', value = 'Gets a random rant from devRant.', inline = False)
 
     await ctx.send(embed = embed)
 
