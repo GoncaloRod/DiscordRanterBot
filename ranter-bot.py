@@ -32,10 +32,35 @@ async def help(ctx):
 
     embed.set_author(name = 'Ranter Bot Help')
 
-    embed.add_field(name = '```' + prefix + 'top' + '```', value = 'Gets the top rant on devRant.', inline = False)
-    embed.add_field(name = '```' + prefix + 'trending' + '```', value = 'Gets a rant given by devRant\'s algorithm.', inline = False)
-    embed.add_field(name = '```' + prefix + 'recent' + '```', value = 'Gets the most recent rant on devRant.', inline = False)
-    embed.add_field(name = '```' + prefix + 'surprise' + '```', value = 'Gets a random rant from devRant.', inline = False)
+    embed.add_field(
+        name = '```' + prefix + 'top' + '```', 
+        value = 'Check out the master of rants!',
+        inline = False,
+    )
+    
+    embed.add_field(
+        name = '```' + prefix + 'trending' + '```',
+        value = 'Just ask devRant\'s algorithm for a rant.',
+        inline = False
+    )
+    
+    embed.add_field(
+        name = '```' + prefix + 'recent' + '```',
+        value = 'Check out the latest and greatest from de devRant community!',
+        inline = False
+    )
+    
+    embed.add_field(
+        name = '```' + prefix + 'surprise' + '```',
+        value = 'Feeling lucky?',
+        inline = False
+    )
+    
+    embed.add_field(
+        name = '```' + prefix + 'rant <link>' + '```',
+        value = 'Have you seen a cool rant? Want to share it with your friends in a cooler way?! Well, this command has got your back!',
+        inline = False
+    )
 
     await ctx.send(embed = embed)
 
@@ -76,6 +101,19 @@ async def recent(ctx):
 @bot.command()
 async def surprise(ctx):
     response = requests.get('https://devrant.com/api/devrant/rants/surprise?app=3')
+
+    if response.json()['success'] != True:
+        await ctx.send(embed =  error_embed(response.json()['error']))
+        return
+
+    rant = response.json()['rant']
+    await ctx.send(embed = generate_embed(rant))
+
+@bot.command()
+async def rant(ctx, link):
+    id = link.split('/')[4]
+
+    response = requests.get('https://devrant.com/api/devrant/rants/' + id + '?app=3')
 
     if response.json()['success'] != True:
         await ctx.send(embed =  error_embed(response.json()['error']))
